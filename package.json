@@ -1,7 +1,7 @@
 {
   "name": "@cjjenkinson/xml-to-json-transform-stream",
   "version": "0.1.0",
-  "description": "RFC822 spec compliant email address scalar type for GraphQL.js",
+  "description": "A XML to JSON parser for pass through transform streams",
   "keywords": [
     "xml to json",
     "xml parser",
@@ -56,5 +56,10 @@
       "prettier --write",
       "git add"
     ]
+  },
+  "dependencies": {
+    "camelcase-keys": "^6.0.0",
+    "fast-xml-parser": "^3.12.16",
+    "he": "^1.2.0"
   }
 }

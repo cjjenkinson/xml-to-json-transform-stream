@@ -1,13 +1,10 @@
-const fs = require('fs');
 const stream = require('stream');
-const util = require('util');
-
 const parser = require('fast-xml-parser');
 const he = require('he');
 const camelcaseKeys = require('camelcase-keys');
 
 class ParserStream extends stream.Transform {
-  constructor({ xmlParsingOptions, camelfyJson }) {
+  constructor(options) {
     super({
       readableObjectMode: true,
       writableObjectMode: true,
@@ -20,7 +17,6 @@ class ParserStream extends stream.Transform {
     this.xml = '';
     this.json = null;
 
-    // Defaults
     this.xmlParsingOptions = {
       attributeNamePrefix: '',
       attrNodeName: 'attributes',
@@ -34,7 +30,7 @@ class ParserStream extends stream.Transform {
       cdataPositionChar: '\\c',
       parseTrueNumberOnly: true,
     };
-    this.camelfyJson = camelfyJson || true;
+    this.camelfyJson = true;
   }
 
   /**

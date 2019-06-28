@@ -1,10 +1,10 @@
-#
+# XML to JSON parser transform stream
+
+Extends Node's Stream Transform to parse XML to JSON
 
 ## Usage
 
-### Options
-
-#### XML Parsing Options
+Using the parser transform is as simple as passing a new instance of the ParserStream to a readable stream through the `.pipe` method.
 
 #### Camelfy JSON
 
@@ -12,16 +12,45 @@ Create new parser stream to pipe a readable stream:
 
 ```javascript
 const pptions = {
-  xmlParsingOptions: {},
   camelfyJson: true,
 };
 
 const parseStream = new ParserStream(options);
 ```
 
-### Node Streams
+### File System Read Streams
 
-### S3 Object Reads
+```javascript
+const fs = require('fs');
+const ParserStream = require('../src');
+
+const parseXML = async () => {
+  const readStream = fs
+    .createReadStream('path-to-xml-file.xml')
+    .pipe(new ParserStream());
+
+  return new Promise((resolve, reject) => {
+    readStream.on('data', json => {
+      resolve(json);
+    });
+    readStream.on('error', error => {
+      reject(error);
+    });
+  });
+};
+
+const getJson = async () => {
+  try {
+    const json = await parseXML();
+
+    return json;
+  } catch (err) {
+    // throw
+  }
+};
+```
+
+### S3 Object Read Stream
 
 ```javascript
 const parseS3GetObjectRead = async (record) => {
